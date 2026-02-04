@@ -1,23 +1,23 @@
 # Inventory Control
 
-Projeto de controle de estoque desenvolvido com **Next.js (React)**, criado para estudo e prática.  
-A proposta é evoluir um sistema simples, organizado e fácil de manter.
+Inventory control project developed with **Next.js (React)**, created for study and practice purposes.  
+The goal is to evolve a simple, well-organized, and easy-to-maintain system.
 
-## 🚀 Funcionalidades
+## 🚀 Features
 
-- Listagem de produtos
-- Cadastro e atualização de produtos
-- Controle de entradas e saídas
-- Registro de movimentações (logs)
+- Product listing
+- Product creation and update
+- Stock in and out control
+- Movement records (logs)
 
-## 🧰 Tecnologias
+## 🧰 Technologies
 
 - Next.js (React)
 - JavaScript / TypeScript
 - Node.js
-- Git e GitHub
+- Git and GitHub
 
-## ▶️ Como rodar o projeto
+## ▶️ How to run the project
 
 ```bash
 git clone git@github.com:pauloteixeira01/inventory-control.git
@@ -26,4 +26,4 @@ npm install
 npm run dev
 ```
 
-Acesse: http://localhost:3000
+Access: http://localhost:3000
