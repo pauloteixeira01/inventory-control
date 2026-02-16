@@ -1,10 +1,28 @@
-export default function AppHome() {
+import Link from "next/link"
+
+export default function HomePage() {
   return (
-    <main className='p-10'>
-      <h1 className='text-3xl font-bold'>Você entrou ✅</h1>
-      <p className='text-gray-600'>
-        Agora vamos criar o Signup e proteger essa rota.
-      </p>
+    <main style={{ padding: 32 }}>
+      <h1>📦 Sistema de Estoque</h1>
+      <p>Escolha uma opção:</p>
+
+      <ul style={{ marginTop: 20 }}>
+        <li>
+          <Link href="/produtos">➡️ Produtos</Link>
+        </li>
+
+        <li>
+          <Link href="/entrada">➡️ Entrada de Estoque</Link>
+        </li>
+
+        <li>
+          <Link href="/saida">➡️ Saída de Estoque</Link>
+        </li>
+
+        <li>
+          <Link href="/vendas">➡️ Vendas</Link>
+        </li>
+      </ul>
     </main>
-  );
+  )
 }
