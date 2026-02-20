@@ -1,67 +1,62 @@
 "use client";
 
 import { useState } from "react";
-
-interface Produto {
-  id: number;
-  nome: string;
-  quantidade: string;
-}
+import FormProduto from "./FormProduto";
+import ListaProdutos from "./ListaProdutos";
+import { Produto } from "./types";
 
 export default function Produtos() {
   const [produtos, setProdutos] = useState<Produto[]>([]);
-  const [nome, setNome] = useState("");
-  const [quantidade, setQuantidade] = useState("");
 
-  
-  function adicionarProdutoTemp() {
-    if (!nome || !quantidade) return;
-
+  function adicionarProduto(dados: Omit<Produto, "id">) {
     const novoProduto: Produto = {
-      id: produtos.length + 1, 
-      nome,
-      quantidade,
+      id: Date.now(),
+      ...dados,
     };
 
-    setProdutos([...produtos, novoProduto]);
+    setProdutos((prev) => [...prev, novoProduto]);
+  }
 
-   
-    setNome("");
-    setQuantidade("");
+  function editarProduto(id: number, dados: Omit<Produto, "id">) {
+    setProdutos((prev) =>
+      prev.map((p) =>
+        p.id === id ? { ...p, ...dados } : p
+      )
+    );
+  }
+
+  function deletarProduto(id: number) {
+    setProdutos((prev) =>
+      prev.filter((p) => p.id !== id)
+    );
   }
 
   return (
-    <main style={{ padding: 32 }}>
-      <h1>📦 Produtos </h1>
+    <main className="min-h-screen bg-black text-white p-6">
+      <div className="mx-auto max-w-xl space-y-8">
 
-      <form
-        onSubmit={(e) => {
-          e.preventDefault(); 
-          adicionarProdutoTemp();
-        }}
-      >
-        <input
-          type="text"
-          placeholder="Nome"
-          value={nome}
-          onChange={(e) => setNome(e.target.value)}
-        />
-        <input
-          type="text"
-          placeholder="Quantidade"
-          value={quantidade}
-          onChange={(e) => setQuantidade(e.target.value)}
-        />
-        <button type="submit">Adicionar</button>
-      </form>
+        <h1 className="text-3xl font-bold tracking-tight">
+          Inventory
+        </h1>
 
-      <ul>
-        {produtos.map((produto) => (
-          <li key={produto.id}>
-            {produto.nome} - {produto.quantidade}
-          </li>
-        ))}
-      </ul>
+        <div className="border border-gray-800 rounded-lg p-6">
+          <FormProduto onAdd={adicionarProduto} />
+        </div>
+
+        <div className="border border-gray-800 rounded-lg p-6">
+          <h2 className="mb-4 text-lg font-semibold text-gray-400">
+            Produtos
+          </h2>
+
+          <ListaProdutos
+            produtos={produtos}
+            onEdit={editarProduto}
+            onDelete={deletarProduto}
+          />
+
+        </div>
+
+      </div>
     </main>
   );
 }
