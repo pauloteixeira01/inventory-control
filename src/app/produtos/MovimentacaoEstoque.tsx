@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Produto } from "./types"
+import type { Produto } from "@/context/ProdutosContext"
 
 type Props = {
   produtos: Produto[]
@@ -18,17 +18,26 @@ export default function MovimentacaoEstoque({
   const [quantidade, setQuantidade] = useState<number>(0)
 
   function movimentar() {
+    if (!idSelecionado || quantidade <= 0) return
+
     setProdutos((prev) =>
       prev.map((produto) => {
         if (produto.id === idSelecionado) {
           if (tipo === "entrada") {
-            return { ...produto, estoque: produto.estoque + quantidade }
+            return {
+              ...produto,
+              quantidade: produto.quantidade + quantidade
+            }
           } else {
-            if (produto.estoque < quantidade) {
+            if (produto.quantidade < quantidade) {
               alert("Estoque insuficiente!")
               return produto
             }
-            return { ...produto, estoque: produto.estoque - quantidade }
+
+            return {
+              ...produto,
+              quantidade: produto.quantidade - quantidade
+            }
           }
         }
         return produto
@@ -42,7 +51,7 @@ export default function MovimentacaoEstoque({
         <option value={0}>Selecione um produto</option>
         {produtos.map((produto) => (
           <option key={produto.id} value={produto.id}>
-            {produto.nome} - Estoque: {produto.estoque}
+            {produto.nome} - Estoque: {produto.quantidade}
           </option>
         ))}
       </select>

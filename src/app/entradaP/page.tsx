@@ -1,10 +1,10 @@
 "use client";
-import { Produto } from "../produtos/types"
+
 import { useState } from "react";
 import { useProdutos } from "@/context/ProdutosContext";
 
 export default function EntradaPage() {
-  const { produtos, atualizarProduto } = useProdutos();
+  const { produtos, editarProduto } = useProdutos();
 
   const [produtoId, setProdutoId] = useState<number | null>(null);
   const [quantidade, setQuantidade] = useState(0);
@@ -13,7 +13,14 @@ export default function EntradaPage() {
   function handleEntrada() {
     if (!produtoId || quantidade <= 0) return;
 
-    atualizarProduto(produtoId, quantidade);
+    const produto = produtos.find(p => p.id === produtoId);
+    if (!produto) return;
+
+    editarProduto(
+      produtoId,
+      produto.nome,
+      produto.quantidade + quantidade
+    );
 
     setMensagem("Entrada realizada com sucesso ✅");
     setQuantidade(0);
@@ -38,11 +45,11 @@ export default function EntradaPage() {
               Selecione um produto
             </option>
 
-           {produtos.map((produto) => 
+            {produtos.map((produto) => (
               <option key={produto.id} value={produto.id}>
                 {produto.nome} (Atual: {produto.quantidade})
               </option>
-            )}
+            ))}
           </select>
 
           <input

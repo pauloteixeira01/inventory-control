@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useProdutos } from "@/context/ProdutosContext";
 
 export default function EntradaPage() {
-  const { produtos, atualizarProduto } = useProdutos();
+  const { produtos, adicionarQuantidade } = useProdutos(); // 👈 trocado aqui
 
   const [produtoId, setProdutoId] = useState<number | null>(null);
   const [quantidade, setQuantidade] = useState(0);
@@ -13,7 +13,7 @@ export default function EntradaPage() {
   function handleEntrada() {
     if (!produtoId || quantidade <= 0) return;
 
-    atualizarProduto(produtoId, quantidade);
+    adicionarQuantidade(produtoId, quantidade); // 👈 trocado aqui
 
     setMensagem("Entrada realizada com sucesso ✅");
     setQuantidade(0);
@@ -22,13 +22,11 @@ export default function EntradaPage() {
   return (
     <main className="min-h-screen bg-black text-white p-6">
       <div className="max-w-xl mx-auto space-y-6">
-
         <h1 className="text-3xl font-bold">
           Entrada de Estoque
         </h1>
 
         <div className="border border-gray-800 rounded-lg p-6 space-y-4">
-
           <select
             className="w-full bg-black border border-gray-700 rounded-md px-3 py-2"
             onChange={(e) => setProdutoId(Number(e.target.value))}
@@ -65,9 +63,7 @@ export default function EntradaPage() {
           {mensagem && (
             <p className="text-green-400 text-sm">{mensagem}</p>
           )}
-
         </div>
-
       </div>
     </main>
   );
